@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rule-based Chatbot</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1CB5E0 10%, #000851 100%);
+    }
+
+    #output {
+      min-height: 200px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      overflow-y: scroll;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="output"></div>
+    <input type="text" id="input" autofocus>
+    <button id="submit" onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const output = document.getElementById('output');
+    const input = document.getElementById('input');
+
+    function sendMessage(event) {
+      if (event) {
+        if (event.type === 'keydown') {
+          if (event.key !== 'Enter') {
+            return;
+          }
+          event.preventDefault();
+        }
+      }
+
+      const message = input.value.trim();
+
+      if (message !== '') {
+        displayMessage(message, 'user');
+        processMessage(message);
+        input.value = '';
+      }
+    }
+
+    input.addEventListener('keydown', sendMessage);
+
+    function displayMessage(message, sender) {
+      const messageContainer = document.createElement('div');
+      messageContainer.classList.add('message', sender);
+      messageContainer.textContent = message;
+
+      output.appendChild(messageContainer);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function processMessage(message) {
+      let response;
+      if (containsKeyword(message, ['hello', 'hi', 'hey'])) {
+        response = getRandomResponse([
+          "Hello!",
+          "Hi there!",
+          "Hey, how can I help you?"
+        ]);
+      } else if (containsKeyword(message, ['how are you', 'how are you doing'])) {
+        response = getRandomResponse([
+          "I'm just a simple chatbot, but thanks for asking!",
+          "I'm doing well. How about you?"
+        ]);
+      } else if (containsKeyword(message, ['goodbye', 'bye'])) {
+        response = "Goodbye! Have a great day!";
+      } else if (containsKeyword(message, ['thank you', 'thanks'])) {
+        response = getRandomResponse([
+          "You're welcome!",
+          "No problem!",
+          "Glad I could help!"
+        ]);
+      } else if (containsKeyword(message, ['help', 'support'])) {
+        response = "I'm here to help! What do you need assistance with?";
+      } else if (containsKeyword(message, ['name'])) {
+        response = "My name is Chatbot. Nice to meet you!";
+      } else if (containsKeyword(message, ['weather'])) {
+        response = "The weather is always nice in the land of algorithms!";
+      } else if (containsKeyword(message, ['time'])) {
+        const currentTime = new Date().toLocaleTimeString();
+        response = `The current time is ${currentTime}.`;
+      } else if (containsKeyword(message, ['programming', 'code', 'coding'])) {
+        response = "I love programming! What programming language are you interested in?";
+      } else if (containsKeyword(message, ['joke', 'funny'])) {
+        response = getRandomResponse([
+          "Why don't scientists trust atoms? Because they make up everything!",
+          "Did you hear about the mathematician who's afraid of negative numbers? He'll stop at nothing to avoid them!",
+          "Why don't skeletons fight each other? They don't have the guts!",
+          "Why couldn't the bicycle find its way home? It lost its bearings!",
+          "Why don't oysters donate to charity? Because they are shellfish!"
+        ]);
+      } else if (containsKeyword(message, ['book', 'read'])) {
+        response = "Books are a great way to gain knowledge and explore different worlds!";
+      } else if (containsKeyword(message, ['music', 'song'])) {
+        response = "Music is the language of the soul. What genre of music do you enjoy?";
+      } else if (containsKeyword(message, ['food', 'eat'])) {
+        response = "Food is a wonderful way to experience different cultures and flavors!";
+      } else if (message.toLowerCase() === 'good') {
+        response = "That's great to hear!";
+      } else {
+        response = "I'm sorry, I don't understand. Can you please rephrase?";
+      }
+
+      displayMessage(response, 'bot');
+    }
+
+    function containsKeyword(message, keywords) {
+      message = message.toLowerCase();
+      for (let i = 0; i < keywords.length; i++) {
+        if (message.includes(keywords[i])) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function getRandomResponse(responses) {
+      const randomIndex = Math.floor(Math.random() * responses.length);
+      return responses[randomIndex];
+    }
+  </script>
+</body>
+</html>
