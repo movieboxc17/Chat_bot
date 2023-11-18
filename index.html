@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rule-based Chatbot</title>
+  <title>Rule-based Chatbot with Basic ML</title>
   <style>
-    body {
+  body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
@@ -74,6 +74,7 @@
   <script>
     const output = document.getElementById('output');
     const input = document.getElementById('input');
+    let botName = "Chatbot"; // Default bot name
 
     function sendMessage(event) {
       if (event) {
@@ -107,6 +108,7 @@
 
     function processMessage(message) {
       let response;
+
       if (containsKeyword(message, ['hello', 'hi', 'hey'])) {
         response = getRandomResponse([
           "Hello!",
@@ -129,7 +131,7 @@
       } else if (containsKeyword(message, ['help', 'support'])) {
         response = "I'm here to help! What do you need assistance with?";
       } else if (containsKeyword(message, ['name'])) {
-        response = "My name is Chatbot. Nice to meet you!";
+        response = `My name is ${botName}. Nice to meet you!`;
       } else if (containsKeyword(message, ['weather'])) {
         response = "The weather is always nice in the land of algorithms!";
       } else if (containsKeyword(message, ['time'])) {
@@ -151,10 +153,51 @@
         response = "Music is the language of the soul. What genre of music do you enjoy?";
       } else if (containsKeyword(message, ['food', 'eat'])) {
         response = "Food is a wonderful way to experience different cultures and flavors!";
-      } else if (message.toLowerCase() === 'good') {
-        response = "That's great to hear!";
+      } else if (containsKeyword(message, ['technology', 'computers'])) {
+        response = "I'm fascinated by technology! What specific aspect are you interested in?";
+      } else if (containsKeyword(message, ['movies', 'films'])) {
+        response = "Movies are a great form of entertainment. Any favorite genre?";
+      } else if (containsKeyword(message, ['travel', 'vacation'])) {
+        response = "Traveling is a wonderful experience! Have you been to any interesting places?";
+      } else if (containsKeyword(message, ['sports', 'fitness'])) {
+        response = "Staying active is important! Do you have a favorite sport or exercise routine?";
+      } else if (containsKeyword(message, ['history', 'historical'])) {
+        response = "History is fascinating! Is there a specific historical period you're interested in?";
+      } else if (containsKeyword(message, ['science', 'scientist'])) {
+        response = "Science is amazing! Any particular branch of science you find intriguing?";
+      } else if (containsKeyword(message, ['art', 'artist'])) {
+        response = "Art is a beautiful expression! Do you have a favorite artist or art style?";
+      } else if (containsKeyword(message, ['education', 'learning'])) {
+        response = "Learning is a lifelong journey! What subjects are you passionate about?";
+      } else if (containsKeyword(message, ['who are you', 'what are you'])) {
+        response = "I am a chatbot designed to assist and chat with you!";
+      } else if (containsKeyword(message, ['how do you work', 'how does it work'])) {
+        response = "I operate based on rules and predefined responses. Feel free to ask me anything!";
+      } else if (containsKeyword(message, ['tell me a fact', 'interesting fact'])) {
+        response = getRandomResponse([
+          "A group of flamingos is called a 'flamboyance.'",
+          "Honey never spoils; archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
+          "The shortest war in history was between Britain and Zanzibar on August 27, 1896. Zanzibar surrendered after 38 minutes."
+        ]);
+      } else if (containsKeyword(message, ['what is your favorite color', 'your color'])) {
+        response = "I don't have a favorite color, but I like the entire spectrum!";
+      } else if (containsKeyword(message, ['where do fruits exist', 'do fruits exist'])) {
+        response = "Fruits exist in various parts of the world, and they grow on plants. Is there a specific fruit you're curious about?";
+      } else if (containsKeyword(message, ['what name do you want', 'your preferred name'])) {
+        response = "You can call me Chatbot, but I don't have a personal preference for a name. What would you like to call me?";
+      } else if (containsKeyword(message, ['change your name', 'rename you'])) {
+        response = "Sure! What name would you like to give me?";
+      } else if (containsKeyword(message, ['basic machine learning', 'simple ml'])) {
+        response = "I have some basic machine learning capabilities! I can recognize certain patterns and respond accordingly.";
+      } else if (containsKeyword(message, ['how does your machine learning work'])) {
+        response = "My machine learning is based on simple pattern matching. I recognize keywords and provide predefined responses. It's not as advanced as some machine learning models, but it gets the job done!";
+      } else if (containsKeyword(message, ['favorite color prediction', 'predict my favorite color'])) {
+        response = "Hmm, predicting your favorite color is a bit tricky without more information. What's your favorite color?";
+      } else if (containsKeyword(message, ['my favorite color is'])) {
+        const userColor = message.split('my favorite color is')[1].trim();
+        response = `Got it! Your favorite color is ${userColor}. That's a great choice!`;
       } else {
-        response = "I'm sorry, I don't understand. Can you please rephrase?";
+        response = "I'm sorry, I don't have information on that topic. Can you ask me something else?";
       }
 
       displayMessage(response, 'bot');
